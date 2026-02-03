@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🧠 THINK AGENT
 
-## Getting Started
+> **DON'T JUST DO IT! TEACH IT!**
 
-First, run the development server:
+Plateforme de challenges IA pour les collaborateurs d'eXalt (1500-1700 personnes).
+
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)
+![Tailwind](https://img.shields.io/badge/Tailwind-CSS-cyan)
+
+## 🚀 Démarrage rapide
+
+### 1. Cloner le repo
+
+```bash
+git clone https://github.com/fxlainr/think-agent.git
+cd think-agent
+npm install
+```
+
+### 2. Configurer Supabase
+
+1. Crée un projet sur [supabase.com](https://supabase.com)
+2. Va dans **SQL Editor** et exécute le contenu de `supabase/schema.sql`
+3. Copie les clés depuis **Settings → API** :
+
+```bash
+cp .env.local.example .env.local
+```
+
+Édite `.env.local` :
+```
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGc...
+```
+
+### 3. Lancer en local
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+→ http://localhost:3000
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Pages Next.js (App Router)
+│   ├── (auth)/login/      # Page de connexion
+│   ├── challenges/        # Catalogue + détail challenge
+│   ├── events/            # Événements Dojo
+│   └── me/                # Profil utilisateur
+├── components/
+│   ├── ui/                # Composants shadcn/ui
+│   ├── layout/            # Header, Footer
+│   ├── challenges/        # Cards, filtres
+│   └── providers/         # AuthProvider
+├── lib/
+│   ├── supabase/          # Client + queries
+│   └── auth.ts            # Context auth
+└── types/
+    └── database.ts        # Types TypeScript
+```
 
-## Learn More
+## 🎨 Charte Glitchforge
 
-To learn more about Next.js, take a look at the following resources:
+| Couleur | Hex | Usage |
+|---------|-----|-------|
+| Fond | `#0A0A0A` | Background principal |
+| Bleu eXalt | `#3B82F6` | Primary, Crafter |
+| Rose | `#EC4899` | Architecte |
+| Vert | `#10B981` | Explorer, succès |
+| Cyan | `#06B6D4` | Hover, liens |
+| Jaune | `#FCD34D` | CTAs, XP |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🏗️ Déploiement Vercel
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Connecte ton repo GitHub à [Vercel](https://vercel.com)
+2. Configure les variables d'environnement :
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. Deploy !
 
-## Deploy on Vercel
+## 📊 Fonctionnalités MVP
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- ✅ Authentification par email (sans mot de passe)
+- ✅ Catalogue de challenges filtrable
+- ✅ Système de progression (Explorer → Crafter → Architecte)
+- ✅ Soumission de solutions
+- ✅ Solution de référence (débloquée après soumission)
+- ✅ Page profil avec XP, badges, leaderboard
+- ✅ Événements Dojo avec lien 360 Learning
+- ✅ Prérequis obligatoires (Basiques + Gardien)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🗺️ Roadmap
+
+- [ ] Évaluation par mentors
+- [ ] Upload de fichiers (Supabase Storage)
+- [ ] Notifications
+- [ ] Admin dashboard
+- [ ] i18n (FR/EN)
+
+---
+
+**eXalt** - *Transformer chaque collaborateur en bâtisseur de son propre futur.*

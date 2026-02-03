@@ -78,14 +78,39 @@ Build + test final avant de passer à la suite
 
 | Phase | Status | Notes |
 |-------|--------|-------|
-| 1. Database | 🔄 En cours | |
-| 2. Connexion | ⏳ À faire | |
-| 3. Pages réelles | ⏳ À faire | |
-| 4. Détail Challenge | ⏳ À faire | |
-| 5. Logique métier | ⏳ À faire | |
-| 6. Tests | ⏳ À faire | |
-| 7. Déploiement | ⏳ À faire | |
+| 1. Database | ✅ Done | Schema SQL créé, prêt à exécuter |
+| 2. Connexion | ✅ Done | AuthProvider + queries.ts |
+| 3. Pages réelles | ✅ Done | Challenges, Events, Profile |
+| 4. Détail Challenge | ✅ Done | /challenges/[id] avec soumission |
+| 5. Logique métier | ✅ Done | Participations, prérequis |
+| 6. Tests | ✅ Done | Build passe |
+| 7. Déploiement | 🔄 Ready | README + instructions Vercel |
 
 ---
 
-Dernière mise à jour : 2026-02-03 04:35 UTC
+## ✅ RÉSUMÉ - Session du 2026-02-03
+
+### Ce qui a été fait :
+1. **Schema SQL** (`supabase/schema.sql`) avec :
+   - 9 tables complètes
+   - Données initiales (9 challenges, 7 badges, 3 événements)
+   - Triggers, index, RLS
+   
+2. **Connexion Supabase** :
+   - `lib/supabase/queries.ts` : toutes les fonctions CRUD
+   - `lib/auth.ts` + `AuthProvider` : authentification par email
+   
+3. **Pages fonctionnelles** :
+   - `/challenges` : catalogue avec filtres
+   - `/challenges/[id]` : détail + participation + soumission
+   - `/events` : événements Dojo
+   - `/me` : profil complet
+   
+4. **Build production** : ✅ Passe sans erreur
+
+### ⚠️ Action requise au réveil :
+Exécuter le schema SQL dans Supabase (voir `SETUP_INSTRUCTIONS.md`)
+
+---
+
+Dernière mise à jour : 2026-02-03 05:00 UTC
