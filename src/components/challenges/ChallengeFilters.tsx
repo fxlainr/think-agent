@@ -117,20 +117,20 @@ export function ChallengeFilters({ filters, onFiltersChange }: ChallengeFiltersP
       {/* Difficulté */}
       <div className="space-y-2">
         <label className="text-sm font-medium text-muted-foreground">Difficulté</label>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {difficultes.map((diff) => (
             <Button
               key={diff}
               variant="outline"
               size="sm"
-              className={`px-3 ${
+              className={`px-2 ${
                 filters.difficulte === diff
                   ? 'bg-accent-jaune text-black border-accent-jaune'
                   : 'border-border hover:border-accent-cyan'
               }`}
               onClick={() => toggleDifficulte(diff)}
             >
-              {'⭐'.repeat(diff)}
+              {diff} ⭐
             </Button>
           ))}
         </div>
