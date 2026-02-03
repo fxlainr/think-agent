@@ -59,7 +59,7 @@ export function ChallengeFilters({ filters, onFiltersChange }: ChallengeFiltersP
   const hasFilters = filters.niveau || filters.marque || filters.difficulte || filters.search;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-background p-4 rounded-lg border border-border relative z-20">
       {/* Search */}
       <form onSubmit={handleSearchSubmit} className="relative">
         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
