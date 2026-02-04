@@ -251,7 +251,7 @@ describe('queries.ts', () => {
 
   describe('getParticipation', () => {
     it('should return participation for user and challenge', async () => {
-      mockSupabaseQuery.single.mockResolvedValue({ data: mockParticipation, error: null });
+      mockSupabaseQuery.maybeSingle.mockResolvedValue({ data: mockParticipation, error: null });
 
       const result = await getParticipation('user-123', 'challenge-123');
 

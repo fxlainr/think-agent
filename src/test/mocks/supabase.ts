@@ -11,6 +11,7 @@ export const mockSupabaseQuery = {
   order: vi.fn().mockReturnThis(),
   limit: vi.fn().mockReturnThis(),
   single: vi.fn(),
+  maybeSingle: vi.fn(),
   rpc: vi.fn(),
 };
 
@@ -59,6 +60,7 @@ export function mockArraySuccess<T>(data: T[]) {
       ...mockSupabaseQuery,
       order: vi.fn().mockResolvedValue(chainEnd),
       single: vi.fn().mockResolvedValue({ data: data[0] || null, error: null }),
+      maybeSingle: vi.fn().mockResolvedValue({ data: data[0] || null, error: null }),
     };
   });
   return mockSupabaseQuery;

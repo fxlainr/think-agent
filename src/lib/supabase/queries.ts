@@ -137,9 +137,9 @@ export async function getParticipation(userId: string, challengeId: string): Pro
     .select('*')
     .eq('user_id', userId)
     .eq('challenge_id', challengeId)
-    .single();
+    .maybeSingle();
 
-  if (error && error.code !== 'PGRST116') {
+  if (error) {
     console.error('Error fetching participation:', error);
   }
   return data;
@@ -212,9 +212,9 @@ export async function getSolution(userId: string, challengeId: string): Promise<
     .select('*')
     .eq('user_id', userId)
     .eq('challenge_id', challengeId)
-    .single();
+    .maybeSingle();
 
-  if (error && error.code !== 'PGRST116') {
+  if (error) {
     console.error('Error fetching solution:', error);
   }
   return data;
