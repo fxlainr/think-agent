@@ -10,9 +10,11 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   ArrowLeft, Clock, Star, Users, Zap, Target, Wrench, 
-  CheckCircle, Loader2, FileText, Send, Eye
+  CheckCircle, Loader2, FileText, Send, Eye, Paperclip
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { FileUpload } from '@/components/challenges/FileUpload';
+import type { UploadedFile } from '@/lib/supabase/storage';
 import { 
   getChallengeById, 
   getParticipation, 
@@ -41,6 +43,7 @@ export default function ChallengeDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [solutionText, setSolutionText] = useState('');
+  const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
   const [showReference, setShowReference] = useState(false);
 
   // Charger les données
@@ -79,10 +82,11 @@ export default function ChallengeDetailPage() {
 
   // Soumettre une solution
   const handleSubmit = async () => {
-    if (!user || !challenge || !solutionText.trim()) return;
+    if (!user || !challenge || (!solutionText.trim() && uploadedFiles.length === 0)) return;
 
     setIsSubmitting(true);
-    const newSolution = await submitSolution(user.id, challenge.id, solutionText);
+    const fileUrls = uploadedFiles.map(f => f.url);
+    const newSolution = await submitSolution(user.id, challenge.id, solutionText, fileUrls);
     if (newSolution) {
       setSolution(newSolution);
       setParticipation(prev => prev ? { ...prev, statut: 'Terminé' } : null);
@@ -233,16 +237,37 @@ export default function ChallengeDetailPage() {
                       Soumettre ta solution
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <textarea
-                      placeholder="Décris ta solution, ton approche, colle tes prompts..."
-                      value={solutionText}
-                      onChange={(e) => setSolutionText(e.target.value)}
-                      className="w-full h-48 p-4 rounded-lg bg-background border border-border focus:border-accent-cyan focus:outline-none resize-none"
-                    />
+                  <CardContent className="space-y-6">
+                    {/* Texte */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Description de ta solution</label>
+                      <textarea
+                        placeholder="Décris ta solution, ton approche, colle tes prompts..."
+                        value={solutionText}
+                        onChange={(e) => setSolutionText(e.target.value)}
+                        className="w-full h-48 p-4 rounded-lg bg-background border border-border focus:border-accent-cyan focus:outline-none resize-none"
+                      />
+                    </div>
+
+                    {/* Upload fichiers */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-2">
+                        <Paperclip className="h-4 w-4" />
+                        Fichiers joints (optionnel)
+                      </label>
+                      <FileUpload
+                        userId={user.id}
+                        challengeId={challenge.id}
+                        onFilesChange={setUploadedFiles}
+                        maxFiles={5}
+                        maxSizeMB={10}
+                      />
+                    </div>
+
+                    {/* Bouton soumettre */}
                     <Button
                       onClick={handleSubmit}
-                      disabled={isSubmitting || !solutionText.trim()}
+                      disabled={isSubmitting || (!solutionText.trim() && uploadedFiles.length === 0)}
                       className="bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold"
                     >
                       {isSubmitting ? (
@@ -271,11 +296,38 @@ export default function ChallengeDetailPage() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="p-4 rounded-lg bg-card border border-border">
-                      <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                        {solution?.contenu_texte}
-                      </p>
-                    </div>
+                    {/* Texte de la solution */}
+                    {solution?.contenu_texte && (
+                      <div className="p-4 rounded-lg bg-card border border-border">
+                        <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                          {solution.contenu_texte}
+                        </p>
+                      </div>
+                    )}
+
+                    {/* Fichiers joints */}
+                    {solution?.fichiers_attaches && (solution.fichiers_attaches as string[]).length > 0 && (
+                      <div className="space-y-2">
+                        <p className="text-sm font-medium flex items-center gap-2">
+                          <Paperclip className="h-4 w-4" />
+                          Fichiers joints
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {(solution.fichiers_attaches as string[]).map((url, index) => (
+                            <a
+                              key={index}
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-card border border-border hover:border-accent-cyan transition-colors text-sm"
+                            >
+                              <FileText className="h-4 w-4" />
+                              Fichier {index + 1}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                     
                     {/* Bouton solution de référence */}
                     {challenge.solution_reference && (
