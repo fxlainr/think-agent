@@ -63,7 +63,9 @@ export async function uploadSolutionFiles(
   const results = await Promise.all(
     files.map((file) => uploadSolutionFile(userId, challengeId, file))
   );
-  return results.filter((r): r is UploadedFile => r !== null);
+  return results
+    .map((r) => r.file)
+    .filter((f): f is UploadedFile => f !== null);
 }
 
 /**
