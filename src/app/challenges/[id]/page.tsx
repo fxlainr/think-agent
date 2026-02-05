@@ -225,6 +225,40 @@ export default function ChallengeDetailPage() {
                 </CardContent>
               </Card>
 
+              {/* Vision & Impact */}
+              {challenge.vision_impact && (
+                <Card className="border-accent-cyan/30 bg-accent-cyan/5">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-accent-cyan">
+                      <Zap className="h-5 w-5" />
+                      Vision &amp; Impact
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground whitespace-pre-wrap">
+                      {challenge.vision_impact}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Le saviez-vous */}
+              {challenge.le_saviez_vous && (
+                <Card className="border-accent-jaune/30 bg-accent-jaune/5">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-accent-jaune">
+                      <Star className="h-5 w-5" />
+                      Le saviez-vous ?
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground whitespace-pre-wrap">
+                      {challenge.le_saviez_vous}
+                    </p>
+                  </CardContent>
+                </Card>
+              )}
+
               {/* Critères d'évaluation */}
               {challenge.criteres_evaluation && (
                 <Card>
@@ -238,6 +272,34 @@ export default function ChallengeDetailPage() {
                     <p className="text-muted-foreground whitespace-pre-wrap">
                       {challenge.criteres_evaluation}
                     </p>
+                  </CardContent>
+                </Card>
+              )}
+
+              {/* Sources */}
+              {challenge.sources && (challenge.sources as string[]).length > 0 && (
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <FileText className="h-5 w-5" />
+                      Sources &amp; Références
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-2">
+                      {(challenge.sources as string[]).map((url, index) => (
+                        <li key={index}>
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent-cyan hover:underline text-sm break-all"
+                          >
+                            {url}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
                   </CardContent>
                 </Card>
               )}
