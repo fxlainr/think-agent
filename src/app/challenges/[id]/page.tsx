@@ -388,25 +388,13 @@ export default function ChallengeDetailPage() {
                         </Button>
                       </Link>
                     </div>
-                  ) : !isParticipating ? (
-                    <Button
-                      onClick={handleParticipate}
-                      disabled={isSubmitting}
-                      className="w-full bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold"
-                    >
-                      {isSubmitting ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                      ) : (
-                        'Participer'
-                      )}
-                    </Button>
                   ) : isCompleted ? (
                     <div className="text-center space-y-2">
                       <CheckCircle className="h-12 w-12 mx-auto text-accent-vert" />
                       <p className="font-semibold text-accent-vert">Challenge complété !</p>
                       <p className="text-sm text-muted-foreground">+{challenge.xp} XP</p>
                     </div>
-                  ) : (
+                  ) : isParticipating ? (
                     <div className="text-center space-y-4">
                       <div className="space-y-2">
                         <div className="h-12 w-12 mx-auto rounded-full bg-accent-cyan/20 flex items-center justify-center">
@@ -430,6 +418,18 @@ export default function ChallengeDetailPage() {
                         Arrêter le challenge
                       </Button>
                     </div>
+                  ) : (
+                    <Button
+                      onClick={handleParticipate}
+                      disabled={isSubmitting}
+                      className="w-full bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold"
+                    >
+                      {isSubmitting ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : (
+                        'Participer'
+                      )}
+                    </Button>
                   )}
                 </CardContent>
               </Card>
