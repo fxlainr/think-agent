@@ -87,7 +87,7 @@ export function ChallengeCard({ challenge, participation }: ChallengeCardProps) 
           <Button
             className={`w-full ${isInProgress ? 'bg-accent-cyan hover:bg-accent-cyan/80' : 'bg-accent-jaune hover:bg-accent-jaune/80'} text-black font-semibold`}
           >
-            {isCompleted ? 'Revoir' : isInProgress ? 'Continuer' : 'Participer'}
+            {isCompleted ? 'Revoir' : isInProgress ? 'Continuer' : 'Voir le détail'}
           </Button>
         </Link>
       </CardFooter>

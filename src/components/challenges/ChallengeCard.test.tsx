@@ -81,10 +81,10 @@ describe('ChallengeCard', () => {
   });
 
   describe('Participation states', () => {
-    it('should show "Participer" button when no participation', () => {
+    it('should show "Voir le détail" button when no participation', () => {
       render(<ChallengeCard challenge={mockChallenge} />);
       
-      expect(screen.getByRole('button', { name: /participer/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /voir le détail/i })).toBeInTheDocument();
     });
 
     it('should show "Continuer" button when in progress', () => {
