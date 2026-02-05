@@ -43,6 +43,10 @@ export interface Challenge {
   marque: Marque | 'Tous';
   participants: 'Solo' | 'Duo' | 'Équipe';
   livrables: string[];
+  // Champs d'enrichissement
+  vision_impact: string | null;      // Pourquoi ce challenge est important
+  le_saviez_vous: string | null;     // Anecdote / hook engageant
+  sources: string[] | null;          // Liens vers articles/posts LinkedIn
   created_at: string;
 }
 

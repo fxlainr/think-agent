@@ -105,6 +105,10 @@ CREATE TABLE challenges (
   marque TEXT DEFAULT 'Tous',
   participants participant_type DEFAULT 'Solo',
   livrables JSONB DEFAULT '[]',
+  -- Nouveaux champs (enrichissement contenu)
+  vision_impact TEXT,                -- Pourquoi ce challenge est important (stratégique)
+  le_saviez_vous TEXT,               -- Anecdote / hook engageant
+  sources JSONB DEFAULT '[]',        -- Liens vers articles/posts LinkedIn
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
