@@ -342,18 +342,22 @@ export default function ChallengeDetailPage() {
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2">
-                      {(challenge.sources as string[]).map((url, index) => {
-                        const fullUrl = url.startsWith('http') ? url : `https://${url}`;
+                      {(challenge.sources as string[]).map((source, index) => {
+                        const isUrl = source.startsWith('http://') || source.startsWith('https://');
                         return (
                           <li key={index}>
-                            <a
-                              href={fullUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-accent-cyan hover:underline text-sm break-all"
-                            >
-                              {url}
-                            </a>
+                            {isUrl ? (
+                              <a
+                                href={source}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-accent-cyan hover:underline text-sm break-all"
+                              >
+                                {source}
+                              </a>
+                            ) : (
+                              <span className="text-sm text-muted-foreground">{source}</span>
+                            )}
                           </li>
                         );
                       })}
