@@ -10,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
   ArrowLeft, Star, Users, Zap, Target, Wrench, Clock,
-  CheckCircle, Loader2, FileText, Send, Eye, Paperclip, XCircle, Pencil
+  CheckCircle, Loader2, FileText, Send, Paperclip, XCircle, Pencil
 } from 'lucide-react';
 import { ChallengeEditForm } from '@/components/challenges/ChallengeEditForm';
 import { useAuth } from '@/lib/auth';
@@ -22,7 +22,6 @@ import {
   getSolution,
   createParticipation, 
   submitSolution,
-  markSolutionViewed,
   abandonParticipation
 } from '@/lib/supabase/queries';
 import type { Challenge, Participation, Solution, VortexStage, Thematique } from '@/types/database';
@@ -69,7 +68,6 @@ export default function ChallengeDetailPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [solutionText, setSolutionText] = useState('');
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([]);
-  const [showReference, setShowReference] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   // Vérifier si l'utilisateur est admin
@@ -121,14 +119,6 @@ export default function ChallengeDetailPage() {
       setParticipation(prev => prev ? { ...prev, statut: 'Terminé' } : null);
     }
     setIsSubmitting(false);
-  };
-
-  // Voir la solution de référence
-  const handleViewReference = async () => {
-    if (!user || !challenge) return;
-    
-    setShowReference(true);
-    await markSolutionViewed(user.id, challenge.id);
   };
 
   // Abandonner le challenge
@@ -470,30 +460,6 @@ export default function ChallengeDetailPage() {
                       </div>
                     )}
                     
-                    {/* Bouton solution de référence */}
-                    {challenge.solution_reference && (
-                      <div className="pt-4 border-t border-border">
-                        {!showReference ? (
-                          <Button
-                            onClick={handleViewReference}
-                            variant="outline"
-                            className="border-accent-cyan text-accent-cyan hover:bg-accent-cyan hover:text-black"
-                          >
-                            <Eye className="h-4 w-4 mr-2" />
-                            🔓 Voir la solution de référence
-                          </Button>
-                        ) : (
-                          <div className="space-y-2">
-                            <h4 className="font-semibold text-accent-cyan">Solution de référence</h4>
-                            <div className="p-4 rounded-lg bg-accent-cyan/10 border border-accent-cyan/30">
-                              <p className="text-sm whitespace-pre-wrap">
-                                {challenge.solution_reference}
-                              </p>
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
                   </CardContent>
                 </Card>
               )}

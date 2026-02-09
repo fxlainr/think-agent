@@ -50,7 +50,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
     vision_impact: challenge.vision_impact || '',
     le_saviez_vous: challenge.le_saviez_vous || '',
     sources: (challenge.sources || []).join('\n'),
-    solution_reference: challenge.solution_reference || '',
   });
 
   const handleChange = (
@@ -95,7 +94,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
         .split('\n')
         .map((s) => s.trim())
         .filter(Boolean),
-      solution_reference: formData.solution_reference || null,
     };
 
     const updated = await updateChallenge(challenge.id, updates);
@@ -348,17 +346,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
             />
           </div>
 
-          {/* Solution de référence */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Solution de référence</label>
-            <textarea
-              name="solution_reference"
-              value={formData.solution_reference}
-              onChange={handleChange}
-              placeholder="Solution modèle pour les participants..."
-              className="w-full h-32 p-3 rounded-lg bg-background border border-border focus:border-accent-cyan focus:outline-none resize-none"
-            />
-          </div>
         </CardContent>
       </Card>
 

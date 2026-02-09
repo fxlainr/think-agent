@@ -16,8 +16,6 @@ const mockChallenge: Challenge = {
   criteres_evaluation: 'Score > 80%',
   xp: 50,
   statut: 'Actif',
-  solution_reference: null,
-  solution_fichiers: null,
   marques: [],
     etape_vortex: null,
     thematiques: [],

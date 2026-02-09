@@ -60,8 +60,6 @@ export interface Challenge {
   criteres_evaluation: string;
   xp: number;
   statut: ChallengeStatus;
-  solution_reference: string | null;
-  solution_fichiers: string[] | null;
   marques: Marque[];  // [] = transverse (toutes marques)
   etape_vortex: VortexStage | null;  // Étape Innovation Vortex
   thematiques: Thematique[];  // Thématiques IA (multi-select)
