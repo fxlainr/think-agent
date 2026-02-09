@@ -351,6 +351,54 @@ export async function getDojoEvents(): Promise<DojoEvent[]> {
   return data || [];
 }
 
+export async function getDojoEventById(id: string): Promise<DojoEvent | null> {
+  const { data, error } = await supabase
+    .from('evenements_dojo')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) {
+    console.error('Error fetching event:', error);
+    return null;
+  }
+  return data;
+}
+
+export async function createDojoEvent(
+  event: Omit<DojoEvent, 'id' | 'created_at'>
+): Promise<DojoEvent | null> {
+  const { data, error } = await supabase
+    .from('evenements_dojo')
+    .insert(event)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating event:', error);
+    return null;
+  }
+  return data;
+}
+
+export async function updateDojoEvent(
+  id: string,
+  updates: Partial<DojoEvent>
+): Promise<DojoEvent | null> {
+  const { data, error } = await supabase
+    .from('evenements_dojo')
+    .update(updates)
+    .eq('id', id)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error updating event:', error);
+    return null;
+  }
+  return data;
+}
+
 // ==========================================
 // LEADERBOARD
 // ==========================================

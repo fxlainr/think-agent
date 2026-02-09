@@ -6,8 +6,11 @@ import { Footer } from '@/components/layout/Footer';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Users, ExternalLink, Video, Building, Loader2 } from 'lucide-react';
+import { Calendar, Clock, MapPin, Users, ExternalLink, Video, Building, Loader2, Plus, Pencil } from 'lucide-react';
+import Link from 'next/link';
+import { useAuth } from '@/lib/auth';
 import { getDojoEvents } from '@/lib/supabase/queries';
+import { DojoEventForm } from '@/components/events/DojoEventForm';
 import type { DojoEvent } from '@/types/database';
 
 function formatDate(dateString: string): string {
@@ -57,7 +60,7 @@ function formatDuration(dateDebut: string, dateFin: string): string {
   return `${hours}h${mins.toString().padStart(2, '0')}`;
 }
 
-function EventCard({ event }: { event: DojoEvent }) {
+function EventCard({ event, isAdmin, onEdit }: { event: DojoEvent; isAdmin: boolean; onEdit: () => void }) {
   const status = getEventStatus(event);
   const isPast = status === 'past';
   const isOngoing = status === 'ongoing';
@@ -89,10 +92,29 @@ function EventCard({ event }: { event: DojoEvent }) {
               </Badge>
             )}
           </div>
+          {isAdmin && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onEdit}
+              className="text-accent-cyan hover:bg-accent-cyan/10"
+            >
+              <Pencil className="h-4 w-4" />
+            </Button>
+          )}
         </div>
         
         <CardTitle className="text-xl mt-2">{event.titre}</CardTitle>
-        <CardDescription className="text-muted-foreground">
+        {event.marques && event.marques.length > 0 && (
+          <div className="flex flex-wrap gap-1 mt-2">
+            {event.marques.map((marque) => (
+              <Badge key={marque} variant="outline" className="text-xs">
+                {marque}
+              </Badge>
+            ))}
+          </div>
+        )}
+        <CardDescription className="text-muted-foreground mt-2">
           {event.description}
         </CardDescription>
       </CardHeader>
@@ -147,8 +169,12 @@ function EventCard({ event }: { event: DojoEvent }) {
 }
 
 export default function EventsPage() {
+  const { user } = useAuth();
   const [events, setEvents] = useState<DojoEvent[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [editingEvent, setEditingEvent] = useState<DojoEvent | null>(null);
+
+  const isAdmin = user?.role === 'Administrateur';
 
   useEffect(() => {
     async function loadEvents() {
@@ -182,11 +208,21 @@ export default function EventsPage() {
       <main className="flex-1 py-8">
         <div className="container mx-auto px-4">
           {/* Page header */}
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Événements Dojo</h1>
-            <p className="text-muted-foreground">
-              Ateliers pratiques pour progresser ensemble. Inscription via 360 Learning.
-            </p>
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">Événements Dojo</h1>
+              <p className="text-muted-foreground">
+                Ateliers pratiques pour progresser ensemble. Inscription via 360 Learning.
+              </p>
+            </div>
+            {isAdmin && (
+              <Link href="/events/new">
+                <Button className="bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nouvel événement
+                </Button>
+              </Link>
+            )}
           </div>
 
           {isLoading ? (
@@ -204,7 +240,12 @@ export default function EventsPage() {
                   </h2>
                   <div className="grid gap-6 md:grid-cols-2">
                     {upcomingEvents.map((event) => (
-                      <EventCard key={event.id} event={event} />
+                      <EventCard 
+                        key={event.id} 
+                        event={event} 
+                        isAdmin={isAdmin}
+                        onEdit={() => setEditingEvent(event)}
+                      />
                     ))}
                   </div>
                 </section>
@@ -219,7 +260,12 @@ export default function EventsPage() {
                   </h2>
                   <div className="grid gap-6 md:grid-cols-2">
                     {pastEvents.map((event) => (
-                      <EventCard key={event.id} event={event} />
+                      <EventCard 
+                        key={event.id} 
+                        event={event} 
+                        isAdmin={isAdmin}
+                        onEdit={() => setEditingEvent(event)}
+                      />
                     ))}
                   </div>
                 </section>
@@ -238,6 +284,23 @@ export default function EventsPage() {
                 </div>
               )}
             </>
+          )}
+
+          {/* Modal d'édition */}
+          {editingEvent && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
+              <div className="bg-background rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto p-6">
+                <h2 className="text-2xl font-bold mb-6">Modifier l&apos;événement</h2>
+                <DojoEventForm
+                  event={editingEvent}
+                  onSuccess={(updated) => {
+                    setEvents(events.map(e => e.id === updated.id ? updated : e));
+                    setEditingEvent(null);
+                  }}
+                  onCancel={() => setEditingEvent(null)}
+                />
+              </div>
+            </div>
           )}
         </div>
       </main>

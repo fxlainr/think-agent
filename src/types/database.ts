@@ -115,7 +115,8 @@ export interface DojoEvent {
   format: EventFormat;
   capacite: number;
   lien_360learning: string;
-  organisateur_id: string;
+  organisateur_id: string | null;
+  marques: Marque[];  // [] = toutes marques
   created_at: string;
 }
 
