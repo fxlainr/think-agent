@@ -152,12 +152,18 @@ function EventCard({ event, isAdmin, onEdit }: { event: DojoEvent; isAdmin: bool
 
         {/* CTA */}
         {!isPast ? (
-          <a href={event.lien_360learning} target="_blank" rel="noopener noreferrer">
-            <Button className="w-full bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold">
-              S&apos;inscrire sur 360 Learning
-              <ExternalLink className="h-4 w-4 ml-2" />
+          event.lien_360learning ? (
+            <a href={event.lien_360learning} target="_blank" rel="noopener noreferrer">
+              <Button className="w-full bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold">
+                S&apos;inscrire sur 360 Learning
+                <ExternalLink className="h-4 w-4 ml-2" />
+              </Button>
+            </a>
+          ) : (
+            <Button disabled variant="outline" className="w-full">
+              Lien d&apos;inscription à venir
             </Button>
-          </a>
+          )
         ) : (
           <Button disabled variant="outline" className="w-full">
             Événement terminé
