@@ -5,7 +5,9 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { ChallengeCard } from '@/components/challenges/ChallengeCard';
 import { ChallengeFilters } from '@/components/challenges/ChallengeFilters';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { getChallenges, getUserParticipations } from '@/lib/supabase/queries';
 import { useAuth } from '@/lib/auth';
 import type { Challenge, Participation, ChallengeFilters as Filters } from '@/types/database';
@@ -58,11 +60,21 @@ export default function ChallengesPage() {
       <main className="flex-1 py-8">
         <div className="container mx-auto px-4">
           {/* Page header */}
-          <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Catalogue des Challenges</h1>
-            <p className="text-muted-foreground">
-              {isLoading ? 'Chargement...' : `${challenges.length} challenge${challenges.length > 1 ? 's' : ''} disponible${challenges.length > 1 ? 's' : ''}`}
-            </p>
+          <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">Catalogue des Challenges</h1>
+              <p className="text-muted-foreground">
+                {isLoading ? 'Chargement...' : `${challenges.length} challenge${challenges.length > 1 ? 's' : ''} disponible${challenges.length > 1 ? 's' : ''}`}
+              </p>
+            </div>
+            {user?.role === 'Administrateur' && (
+              <Link href="/challenges/new">
+                <Button className="bg-accent-jaune hover:bg-accent-jaune/80 text-black font-semibold">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Nouveau challenge
+                </Button>
+              </Link>
+            )}
           </div>
 
           <div className="grid gap-8 lg:grid-cols-[280px_1fr]">

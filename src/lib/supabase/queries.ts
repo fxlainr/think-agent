@@ -130,6 +130,22 @@ export async function updateChallenge(
   return data;
 }
 
+export async function createChallenge(
+  challenge: Omit<Challenge, 'id' | 'created_at'>
+): Promise<Challenge | null> {
+  const { data, error } = await supabase
+    .from('challenges')
+    .insert(challenge)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating challenge:', error);
+    return null;
+  }
+  return data;
+}
+
 // ==========================================
 // PARTICIPATIONS
 // ==========================================
