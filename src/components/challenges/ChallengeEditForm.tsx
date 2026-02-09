@@ -253,10 +253,10 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
         </CardContent>
       </Card>
 
-      {/* Étape Innovation Vortex */}
+      {/* Phases */}
       <Card>
         <CardHeader>
-          <CardTitle>Étape Innovation Vortex</CardTitle>
+          <CardTitle>Phases</CardTitle>
         </CardHeader>
         <CardContent>
           <select
