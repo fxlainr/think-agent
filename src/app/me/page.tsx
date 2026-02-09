@@ -203,10 +203,6 @@ export default function ProfilePage() {
                                   <Badge variant="outline" className="text-xs">
                                     {challenge?.niveau_associe}
                                   </Badge>
-                                  <span className="flex items-center gap-1">
-                                    <Clock className="h-3 w-3" />
-                                    {challenge?.duree_estimee}
-                                  </span>
                                   <span className="flex items-center gap-1 text-accent-jaune">
                                     <Zap className="h-3 w-3" />
                                     {challenge?.xp} XP

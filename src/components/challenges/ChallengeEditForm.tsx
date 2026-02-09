@@ -28,7 +28,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
     niveau_associe: challenge.niveau_associe,
     type: challenge.type,
     difficulte: challenge.difficulte,
-    duree_estimee: challenge.duree_estimee,
     xp: challenge.xp,
     marques: challenge.marques || [],
     participants: challenge.participants,
@@ -63,7 +62,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
       niveau_associe: formData.niveau_associe,
       type: formData.type,
       difficulte: Number(formData.difficulte),
-      duree_estimee: formData.duree_estimee,
       xp: Number(formData.xp),
       marques: formData.marques,
       participants: formData.participants,
@@ -175,18 +173,8 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
             </div>
           </div>
 
-          {/* Durée + XP + Participants + Statut */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Durée estimée</label>
-              <Input
-                name="duree_estimee"
-                value={formData.duree_estimee}
-                onChange={handleChange}
-                placeholder="ex: 2h"
-              />
-            </div>
-
+          {/* XP + Participants + Statut */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <label className="text-sm font-medium">XP</label>
               <Input

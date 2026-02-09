@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { 
-  ArrowLeft, Clock, Star, Users, Zap, Target, Wrench, 
+  ArrowLeft, Star, Users, Zap, Target, Wrench, Clock,
   CheckCircle, Loader2, FileText, Send, Eye, Paperclip, XCircle, Pencil
 } from 'lucide-react';
 import { ChallengeEditForm } from '@/components/challenges/ChallengeEditForm';
@@ -225,10 +225,6 @@ export default function ChallengeDetailPage() {
                     className={`h-4 w-4 ${i < challenge.difficulte ? 'fill-accent-jaune text-accent-jaune' : 'text-muted'}`}
                   />
                 ))}
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock className="h-4 w-4" />
-                {challenge.duree_estimee}
               </div>
               <div className="flex items-center gap-1">
                 <Users className="h-4 w-4" />

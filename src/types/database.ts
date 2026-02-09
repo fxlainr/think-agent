@@ -32,7 +32,6 @@ export interface Challenge {
   niveau_associe: UserLevel;
   type: ChallengeType;
   difficulte: number; // 1-5
-  duree_estimee: string;
   type_evaluation: EvaluationType;
   outils_recommandes: string[];
   criteres_evaluation: string;

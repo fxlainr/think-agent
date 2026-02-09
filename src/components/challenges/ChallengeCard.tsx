@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Clock, Star, Users, Zap, CheckCircle } from 'lucide-react';
+import { Star, Users, Zap, CheckCircle } from 'lucide-react';
 import type { Challenge, Participation } from '@/types/database';
 
 interface ChallengeCardProps {
@@ -68,12 +68,6 @@ export function ChallengeCard({ challenge, participation }: ChallengeCardProps) 
                 className={`h-3 w-3 ${i < challenge.difficulte ? 'fill-accent-jaune text-accent-jaune' : 'text-muted'}`}
               />
             ))}
-          </div>
-
-          {/* Durée */}
-          <div className="flex items-center gap-1">
-            <Clock className="h-3 w-3" />
-            {challenge.duree_estimee}
           </div>
 
           {/* Participants */}

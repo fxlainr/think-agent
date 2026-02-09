@@ -50,7 +50,6 @@ const mockChallenge: Challenge = {
   niveau_associe: 'Explorer',
   type: 'Quiz',
   difficulte: 1,
-  duree_estimee: '30min',
   type_evaluation: 'Automatique',
   outils_recommandes: ['ChatGPT'],
   criteres_evaluation: 'Score > 80%',
