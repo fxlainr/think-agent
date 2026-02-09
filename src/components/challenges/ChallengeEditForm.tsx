@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { MultiSelectMarques } from '@/components/ui/multi-select-marques';
 import { Loader2, Save, X } from 'lucide-react';
 import { updateChallenge } from '@/lib/supabase/queries';
-import type { Challenge, UserLevel, ChallengeType, Marque } from '@/types/database';
+import type { Challenge, UserLevel, ChallengeType, Marque, VortexStage } from '@/types/database';
 
 interface ChallengeEditFormProps {
   challenge: Challenge;
@@ -20,6 +20,16 @@ const TYPES: ChallengeType[] = ['Quiz', 'Exercice', 'Projet', 'Use_Case'];
 const PARTICIPANTS = ['Solo', 'Duo', 'Équipe'] as const;
 const STATUTS = ['Actif', 'Archivé'] as const;
 
+const VORTEX_STAGES: { value: VortexStage; label: string }[] = [
+  { value: 'contextualize', label: '1. Cadrer (Contextualize)' },
+  { value: 'empathize', label: '2. Découvrir (Empathize)' },
+  { value: 'synthesize', label: '3. Définir (Synthesize)' },
+  { value: 'hypothesize', label: '4. Idéer (Hypothesize)' },
+  { value: 'externalize', label: '5. Construire (Externalize)' },
+  { value: 'sensitize', label: '6. Tester (Sensitize)' },
+  { value: 'systematize', label: '7. Apprendre (Systematize)' },
+];
+
 export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEditFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
@@ -30,6 +40,7 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
     difficulte: challenge.difficulte,
     xp: challenge.xp,
     marques: challenge.marques || [],
+    etape_vortex: challenge.etape_vortex || '',
     participants: challenge.participants,
     statut: challenge.statut,
     outils_recommandes: (challenge.outils_recommandes || []).join(', '),
@@ -64,6 +75,7 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
       difficulte: Number(formData.difficulte),
       xp: Number(formData.xp),
       marques: formData.marques,
+      etape_vortex: (formData.etape_vortex || null) as VortexStage | null,
       participants: formData.participants,
       statut: formData.statut,
       outils_recommandes: formData.outils_recommandes
@@ -231,6 +243,28 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
             value={formData.marques}
             onChange={handleMarquesChange}
           />
+        </CardContent>
+      </Card>
+
+      {/* Étape Innovation Vortex */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Étape Innovation Vortex</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <select
+            name="etape_vortex"
+            value={formData.etape_vortex}
+            onChange={handleChange}
+            className="w-full p-2 rounded-lg bg-background border border-border focus:border-accent-cyan focus:outline-none"
+          >
+            <option value="">Non définie</option>
+            {VORTEX_STAGES.map((stage) => (
+              <option key={stage.value} value={stage.value}>
+                {stage.label}
+              </option>
+            ))}
+          </select>
         </CardContent>
       </Card>
 

@@ -25,12 +25,22 @@ import {
   markSolutionViewed,
   abandonParticipation
 } from '@/lib/supabase/queries';
-import type { Challenge, Participation, Solution } from '@/types/database';
+import type { Challenge, Participation, Solution, VortexStage } from '@/types/database';
 
 const levelConfig: Record<string, { color: string; bgColor: string }> = {
   Explorer: { color: 'text-accent-vert', bgColor: 'bg-accent-vert' },
   Crafter: { color: 'text-exalt-blue', bgColor: 'bg-exalt-blue' },
   Architecte: { color: 'text-accent-rose', bgColor: 'bg-accent-rose' },
+};
+
+const VORTEX_LABELS: Record<VortexStage, string> = {
+  contextualize: '1. Cadrer',
+  empathize: '2. Découvrir',
+  synthesize: '3. Définir',
+  hypothesize: '4. Idéer',
+  externalize: '5. Construire',
+  sensitize: '6. Tester',
+  systematize: '7. Apprendre',
 };
 
 export default function ChallengeDetailPage() {
@@ -192,6 +202,11 @@ export default function ChallengeDetailPage() {
                 ))
               ) : (
                 <Badge variant="outline" className="text-muted-foreground">Toutes marques</Badge>
+              )}
+              {challenge.etape_vortex && (
+                <Badge variant="outline" className="bg-accent-rose/10 border-accent-rose text-accent-rose">
+                  {VORTEX_LABELS[challenge.etape_vortex]}
+                </Badge>
               )}
               {isCompleted && (
                 <Badge className="bg-accent-vert text-black">

@@ -12,6 +12,16 @@ export type EventFormat = 'En_Ligne' | 'Présentiel';
 // Marques eXalt
 export type Marque = 'FLOW' | 'IT' | 'VALUE' | 'FORGE' | 'FI' | 'SHIELD' | 'NILO';
 
+// Étapes Innovation Vortex
+export type VortexStage = 
+  | 'contextualize'  // Cadrer / Frame
+  | 'empathize'      // Découvrir / Discover
+  | 'synthesize'     // Définir / Define
+  | 'hypothesize'    // Idéer / Ideate
+  | 'externalize'    // Construire / Build
+  | 'sensitize'      // Tester / Test
+  | 'systematize';   // Apprendre / Learn
+
 export interface User {
   id: string;
   email: string;
@@ -40,6 +50,7 @@ export interface Challenge {
   solution_reference: string | null;
   solution_fichiers: string[] | null;
   marques: Marque[];  // [] = transverse (toutes marques)
+  etape_vortex: VortexStage | null;  // Étape Innovation Vortex
   participants: 'Solo' | 'Duo' | 'Équipe';
   livrables: string[];
   // Champs d'enrichissement
