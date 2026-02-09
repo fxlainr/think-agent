@@ -582,27 +582,6 @@ export default function ChallengeDetailPage() {
                 </Card>
               )}
 
-              {/* Livrables */}
-              {challenge.livrables && (challenge.livrables as string[]).length > 0 && (
-                <Card>
-                  <CardHeader className="pb-3">
-                    <CardTitle className="text-lg flex items-center gap-2">
-                      <FileText className="h-5 w-5" />
-                      Livrables attendus
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {(challenge.livrables as string[]).map((livrable, index) => (
-                        <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <span className="h-1.5 w-1.5 rounded-full bg-accent-cyan" />
-                          {livrable}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
             </div>
           </div>
           </>

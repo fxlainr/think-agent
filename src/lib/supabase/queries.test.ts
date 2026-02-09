@@ -61,7 +61,6 @@ const mockChallenge: Challenge = {
     etape_vortex: null,
     thematiques: [],
   participants: 'Solo',
-  livrables: [],
   vision_impact: null,
   le_saviez_vous: null,
   sources: null,

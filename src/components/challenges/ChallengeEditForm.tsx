@@ -47,7 +47,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
     statut: challenge.statut,
     outils_recommandes: (challenge.outils_recommandes || []).join(', '),
     criteres_evaluation: challenge.criteres_evaluation || '',
-    livrables: (challenge.livrables || []).join(', '),
     vision_impact: challenge.vision_impact || '',
     le_saviez_vous: challenge.le_saviez_vous || '',
     sources: (challenge.sources || []).join('\n'),
@@ -90,10 +89,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
         .map((s) => s.trim())
         .filter(Boolean),
       criteres_evaluation: formData.criteres_evaluation,
-      livrables: formData.livrables
-        .split(',')
-        .map((s) => s.trim())
-        .filter(Boolean),
       vision_impact: formData.vision_impact || null,
       le_saviez_vous: formData.le_saviez_vous || null,
       sources: formData.sources
@@ -338,17 +333,6 @@ export function ChallengeEditForm({ challenge, onSave, onCancel }: ChallengeEdit
               value={formData.outils_recommandes}
               onChange={handleChange}
               placeholder="Séparés par des virgules : ChatGPT, n8n, Cursor..."
-            />
-          </div>
-
-          {/* Livrables */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Livrables attendus</label>
-            <Input
-              name="livrables"
-              value={formData.livrables}
-              onChange={handleChange}
-              placeholder="Séparés par des virgules : Prompt système, Documentation..."
             />
           </div>
 

@@ -66,7 +66,6 @@ export interface Challenge {
   etape_vortex: VortexStage | null;  // Étape Innovation Vortex
   thematiques: Thematique[];  // Thématiques IA (multi-select)
   participants: 'Solo' | 'Duo' | 'Équipe';
-  livrables: string[];
   // Champs d'enrichissement
   vision_impact: string | null;      // Pourquoi ce challenge est important
   le_saviez_vous: string | null;     // Anecdote / hook engageant
